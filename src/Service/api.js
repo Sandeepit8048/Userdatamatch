@@ -1,4 +1,5 @@
 import axios from 'axios';
+export const getUserById = (id) => api.get(`/users/${id}`);
 
 // Base URL for the API
 const API_BASE_URL = 'https://reqres.in/api';
@@ -41,9 +42,18 @@ export const fetchUsers = async (page = 1) => {
 };
 
 // Update User API
+// // Update User API
 export const updateUser = async (id, data) => {
   try {
-    const response = await api.put(`/users/${id}`, data);
+    const updatedData = {
+      first_name: data.first_name,
+      last_name: data.last_name,
+    };
+    console.log(updatedData);
+    
+    const response = await api.put(`/users/${id}`, updatedData);
+    console.log(response);
+    
     return response.data;
   } catch (error) {
     throw error.response?.data?.error || 'Failed to update user';
@@ -59,3 +69,4 @@ export const deleteUser = async (id) => {
     throw error.response?.data?.error || 'Failed to delete user';
   }
 };
+

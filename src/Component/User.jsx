@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchUsers, deleteUser } from '../Service/api';
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -37,10 +38,10 @@ const UsersList = () => {
   };
 
   return (
-    <div>
-      <h2>Users List</h2>
-      <table border="1">
-        <thead>
+    <div className="container mt-5 bg-light p-4 rounded shadow">
+      <h2 className="text-center mb-4">Users List</h2>
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
           <tr>
             <th>Avatar</th>
             <th>Name</th>
@@ -52,24 +53,38 @@ const UsersList = () => {
           {users.map((user) => (
             <tr key={user.id}>
               <td>
-                <img src={user.avatar} alt={user.first_name} width="50" />
+                <img src={user.avatar} alt={user.first_name} width="50" className="rounded-circle" />
               </td>
               <td>{`${user.first_name} ${user.last_name}`}</td>
               <td>{user.email}</td>
               <td>
-                <button onClick={() => handleEdit(user.id)}>Edit</button>
-                <button onClick={() => handleDelete(user.id)}>Delete</button>
+                <button className="btn btn-success btn-sm me-2" onClick={() => handleEdit(user.id)}>
+                  Edit
+                </button>
+                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(user.id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div>
-        <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
+      <div className="d-flex justify-content-between align-items-center mt-3">
+        <button
+          className="btn btn-primary"
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+        >
           Previous
         </button>
-        <span> Page {page} of {totalPages} </span>
-        <button onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          className="btn btn-primary"
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={page === totalPages}
+        >
           Next
         </button>
       </div>
